@@ -1,0 +1,8 @@
+Package: org.thebigboss.nophotogestures
+Name: NoPhotoGestures
+Depends: mobilesubstrate, preferenceloader, firmware (>= 7.0)
+Version: 1.0
+Architecture: iphoneos-arm
+Description: Disable zooming gestures of photos grid.
+Author: PoomSmart
+Section: Tweaks
