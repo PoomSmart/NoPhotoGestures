@@ -33,7 +33,23 @@ BOOL minimizeEnabled;
 
 %end
 
-%group iOS8
+%group iOS9Up
+
+%hook PUInteractivePinchDismissalController
+
+// minimize
+- (void)_handlePinchGestureRecognizer:(id)arg1
+{
+	if (minimizeEnabled)
+		return;
+	%orig;
+}
+
+%end
+
+%end
+
+%group iOS8Up
 
 %hook PUZoomableGridViewController
 
@@ -91,8 +107,11 @@ static void reloadSettings(CFNotificationCenterRef center, void *observer, CFStr
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, &reloadSettings, PreferencesNotification, NULL, CFNotificationSuspensionBehaviorCoalesce);
 	reloadSettings(NULL, NULL, NULL, NULL, NULL);
-	if (isiOS8) {
-		%init(iOS8);
+	if (isiOS8Up) {
+		if (isiOS9Up) {
+			%init(iOS9Up);
+		}
+		%init(iOS8Up);
 	}
 	else if (isiOS7) {
 		if (!isPhotoApp)
